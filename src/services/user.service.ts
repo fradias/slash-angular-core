@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { updateAndfilterUniqueItems } from '../shared/helpers';
+import { API } from '../environments/environment';
 
 
 
@@ -33,12 +34,17 @@ export class UserService implements OnInit {
   ngOnInit() {
   }
 
+  myApiCreateUser(user) {
+    return this.http
+      .post(API.users + 'create/', user, this.options)
+      .map(res => res.json())
+  }
+
   getUsers() {
     return this.http.get(this.APIuser)
             .map(res => {
               return res.json();
             });
-
   }
 
   initializingUserState() {

@@ -6,3 +6,10 @@
 export const environment = {
   production: false
 };
+
+export const API = {
+  users: 'http://localhost:3000/users/',
+  slashes: 'http://localhost:3000/slashes/',
+  posts: 'http://localhost:3000/posts/',
+  comments: 'http://localhost:3000/comments/'
+}
