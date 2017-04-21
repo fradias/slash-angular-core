@@ -29,6 +29,22 @@ export function users(state = initialUserState, action: UserActions.Actions) {
         error: action.payload
       });
 
+    case UserActions.Types.CREATE_USER:
+      return Object.assign({}, state, {loading: true, error: null});
+
+    case UserActions.Types.CREATE_USER_SUCCESS:
+      console.log('User Created Correctly');
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        loading: false
+      });
+
+    case UserActions.Types.CREATE_USER_FAIL:
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.payload
+      });
+
 
 
     default:

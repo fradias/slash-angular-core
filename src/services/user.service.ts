@@ -22,6 +22,7 @@ export class UserService implements OnInit {
 
   test: any;
 
+  // TODO: terminar de cambiar todos los pedidos a la api mia
   APIuser = 'http://localhost:8080/user';
 
   constructor(
@@ -41,7 +42,7 @@ export class UserService implements OnInit {
   }
 
   getUsers() {
-    return this.http.get(this.APIuser)
+    return this.http.get(API.users)
             .map(res => {
               return res.json();
             });
@@ -83,8 +84,7 @@ export class UserService implements OnInit {
   }
 
   getUser(id){
-    let url = `${this.APIuser}/${id}`;
-    return this.http.get(url)
+    return this.http.get(API.users + `${id}`)
       .map(res => {
         return res.json();
       });
@@ -94,7 +94,7 @@ export class UserService implements OnInit {
   createUser(user) {
     console.log('createUser');
     return this.http
-      .post(this.APIuser, user, this.options)
+      .post(API.users + `create/`, user, this.options)
       .map(res => res.json())
       .catch(this.handleError)
   }

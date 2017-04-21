@@ -22,5 +22,13 @@ export class UserEffects {
       this.userService.ngrxFindUsersById(action.payload)
         .map((users: User[]) => new UserActions.GetUsersByIdSuccess(users))
         .catch((e) => of(new UserActions.GetUsersByIdFail(e)))
-    )
+    );
+
+  @Effect() createUser$ = this.actions$
+    .ofType(UserActions.Types.CREATE_USER)
+    .switchMap(action =>
+      this.userService.createUser(action.payload)
+        .map((user: User) => new UserActions.CreateUserSuccess(user))
+        .catch((e) => of(new UserActions.CreateUserFail(e)))
+    );
 }
