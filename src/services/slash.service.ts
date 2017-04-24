@@ -47,7 +47,7 @@ export class SlashService {
       max = `?max=${maxPosts}`;
     }
 
-    return this.http.get(this.APIslashes + max)
+    return this.http.get(API.slashes + max)
             .map(res => res.json());
   }
 
@@ -58,9 +58,8 @@ export class SlashService {
   }
 
   getSlash(id) {
-    let url = `${this.APIslashes}/${id}`
     return this.http
-            .get(url)
+            .get(API.slashes + `${id}`)
             .map(res => res.json());
   }
 
@@ -240,7 +239,7 @@ export class SlashService {
       names.map(name => {
         return this.getSlashByName(name);
       })
-    )
+    ).map((responses: any[]) => responses.filter(res => !res.error))
   }
 
   ngrxCreateSlashes(slashesNames: any[]) {

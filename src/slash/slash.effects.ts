@@ -29,7 +29,7 @@ export class SlashEffects {
     .ofType(SlashActions.Types.GET_SLASHES_BY_NAME)
     .switchMap(action =>
       this.slashService.ngrxGetSlashesByName(action.payload)
-        .map((slashes: Slash[]) => new SlashActions.GetSlashesByNameSuccess(slashes.map(slash => slash)))
+        .map((slashes: Slash[]) => new SlashActions.GetSlashesByNameSuccess(slashes))
         .catch((e) => of(new SlashActions.GetSlashesByNameFail(e)))
     );
 
