@@ -8,6 +8,7 @@ import { SlashService } from './slash.service';
 import 'rxjs/add/observable/forkJoin';
 
 import { Post } from '../post/post.model';
+import { API } from '../environments/environment';
 
 
 import { updateAndfilterUniqueItems } from '../shared/helpers';
@@ -42,13 +43,13 @@ export class PostService {
   }
 
   getPosts() {
-  return  this.http.get(this.APIurl + '?max=100')
+  return  this.http.get(API.posts + '?max=100')
               .map(res => res.json());
   }
 
   createPost(post) {
     return this.http
-      .post(this.APIurl, post, this.options)
+      .post(API.posts + 'create/', post, this.options)
       .map(res => res.json())
   }
 
@@ -63,9 +64,8 @@ export class PostService {
   }
 
   getPost(postID) {
-    let url = `${this.APIurl}/${postID}`;
     return this.http
-      .get(url)
+      .get(API.posts + `${postID}`)
       .map(res => res.json());
   }
 

@@ -29,15 +29,9 @@ export class SlashEffects {
     .ofType(SlashActions.Types.GET_SLASHES_BY_NAME)
     .switchMap(action =>
       this.slashService.ngrxGetSlashesByName(action.payload)
-        .map((slashes: Slash[]) => new SlashActions.GetSlashesByNameSuccess(slashes.map(slash => slash[0])))
+        .map((slashes: Slash[]) => new SlashActions.GetSlashesByNameSuccess(slashes.map(slash => slash)))
         .catch((e) => of(new SlashActions.GetSlashesByNameFail(e)))
     );
-
-  /*@Effect() setCurrentSlashesId$ = this.actions$
-    .ofType(SlashActions.Types.SET_CURRENT_SLASHES_ID)
-    .switchMap(action =>
-      this.
-    )*/
 
   @Effect() createSlashes$ = this.actions$
     .ofType(SlashActions.Types.CREATE_SLASHES)

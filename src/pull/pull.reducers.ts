@@ -16,7 +16,7 @@ export function pull(state = initialPullState, action: PullActions.Actions): Pul
 
     case PullActions.Types.ADD_ACTION:
       return Object.assign({}, state, {
-        actions: state.actions.concat(action.payload)
+        actions: updateAndfilterUniqueItems(state.actions.concat(action.payload))
       });
 
     case PullActions.Types.START_POOL:

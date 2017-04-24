@@ -21,9 +21,10 @@ export class PullEffects {
 
   @Effect() addAction = this.actions$
     .ofType(PullActions.Types.ADD_ACTION)
-    .switchMap(action =>
-      Observable.from(action.payload)
-    );
+    .switchMap(action =>{
+      console.log(action);
+      return Observable.from(action.payload.map(a => a.act))
+    });
 
   @Effect() startPool$ = this.actions$
     .ofType(PullActions.Types.START_POOL)
@@ -37,7 +38,7 @@ export class PullEffects {
         return this.store.switchMap(store => {
           if (store.pullState.started) {
             return Observable.from(
-              store.pullState.actions.concat(new PullActions.ProccessPool({}))
+              store.pullState.actions.map(a => a.act).concat(new PullActions.ProccessPool({}))
             );
           }
         })

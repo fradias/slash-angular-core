@@ -7,6 +7,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { Slash } from '../slash/slash.model';
+import { API } from '../environments/environment';
 
 
 
@@ -52,7 +53,7 @@ export class SlashService {
 
   createSlash(slash) {
     return this.http
-            .post(this.APIslashes, slash, this.options)
+            .post(API.slashes + 'create/', slash, this.options)
             .map(res => res.json());
   }
 
@@ -64,7 +65,7 @@ export class SlashService {
   }
 
   getSlashByName(name: string) {
-    return this.http.get(this.APIslashes + `?name=/${name}`)
+    return this.http.get(API.slashes + `?name=/${name}`)
             .map(res => res.json());
   }
 
