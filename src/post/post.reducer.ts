@@ -72,7 +72,20 @@ export function posts(state = initialPostState, action: PostActions.Actions): Po
         error: action.payload
       });
 
+      case PostActions.Types.LIKE_POST:
+        return Object.assign({}, state, {loading: true, error: null});
 
+      case PostActions.Types.LIKE_POST_SUCCESS:
+        return Object.assign({}, state, {
+          postList: updateAndfilterUniqueItems(state.postList.concat(action.payload)),
+          loading: false
+        });
+
+      case PostActions.Types.CREATE_POST_FAIL:
+        return Object.assign({}, state, {
+          loading: false,
+          error: action.payload
+        });
 
     default:
       return state;

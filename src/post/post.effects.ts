@@ -24,7 +24,7 @@ export class PostEffects {
       this.postService.ngrxGetPostById(action.payload)
         .map((posts: Post[]) => new PostActions.GetPostsByIdsSuccess(posts))
         .catch((e) => of(new PostActions.GetPostsByIdsFail(e)))
-    )
+    );
 
 
   @Effect() getPostsByUserId$ = this.actions$
@@ -33,7 +33,7 @@ export class PostEffects {
       this.postService.ngrxFindPostByUserId(action.payload)
         .map((posts: Post[]) => new PostActions.GetPostsByUserIdSuccess(posts))
         .catch((e) => of(new PostActions.GetPostsByUserIdFail(e)))
-    )
+    );
 
   @Effect() createPost$ = this.actions$
     .ofType(PostActions.Types.CREATE_POST)
@@ -41,12 +41,20 @@ export class PostEffects {
       this.postService.createPost(action.payload)
         .map((post: Post) => new PostActions.CreatePostSuccess(post))
         .catch((e) => of(new PostActions.GetPostsByUserIdFail(e)))
-    )
+    );
 
   @Effect() updateSlashesList$ = this.actions$
     .ofType(PostActions.Types.CREATE_POST_SUCCESS)
     .map(action => {
       let slashesId: any[] = action.payload.slashes
       return new SlashActions.GetSlashesById(slashesId)
-    })
+    });
+
+  @Effect() likePost$ = this.actions$
+    .ofType(PostActions.Types.LIKE_POST)
+    .switchMap(action =>
+      this.postService.likePost(action.payload)
+        .map((post: Post) => new PostActions.LikePostSuccess(post)) // podria re-usar PostActions.CreatePostSuccess(posts)
+        .catch((e) => of(new PostActions.LikePostFail(e)))
+    );
 }

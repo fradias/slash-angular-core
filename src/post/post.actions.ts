@@ -15,6 +15,9 @@ export namespace PostActions {
     CREATE_POST: type('[Post] Create Post'),
     CREATE_POST_SUCCESS: type('[Post] Create Post Success'),
     CREATE_POST_FAIL: type('[Post] Create Post Fail'),
+    LIKE_POST: type('[Post] Like Post'),
+    LIKE_POST_SUCCESS: type('[Post] Like Post Success'),
+    LIKE_POST_FAIL: type('[Post] Like Post Fail'),
   }
 
   export class GetPostsByIds implements Action {
@@ -78,9 +81,23 @@ export namespace PostActions {
     constructor(public payload: any) { }
   }
 
+  export class LikePost implements Action {
+    type = Types.LIKE_POST;
 
+    constructor(public payload: any) { }
+  }
 
+  export class LikePostSuccess implements Action {
+    type = Types.LIKE_POST_SUCCESS;
 
+    constructor(public payload: Post) { }
+  }
+
+  export class LikePostFail implements Action {
+    type = Types.LIKE_POST_FAIL;
+
+    constructor(public payload: any) { }
+  }
 
   export type Actions
     = GetPostsByIds
@@ -93,9 +110,8 @@ export namespace PostActions {
     | CreatePost
     | CreatePostSuccess
     | CreatePostFail
-
-
-
-
+    | LikePost
+    | LikePostSuccess
+    | LikePostFail
 
 }

@@ -185,6 +185,12 @@ export class PostService {
     })
   }
 
+  likePost(data: {postId: string, userId: string}) {
+    return this.http
+      .post(API.posts + 'like', data, this.options)
+      .map(res => res.json())
+  }
+
   // NGRX -----------------------------------------------------------
 
   ngrxGetPostById(ids) {

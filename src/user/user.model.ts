@@ -9,6 +9,7 @@ export interface User {
   role: string;
   salt: string;
   slashes: any[];
+  likedPosts: any[];
   suspiciousness: number;
   updatedDate: string;
 
