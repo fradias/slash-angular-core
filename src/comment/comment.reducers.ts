@@ -49,7 +49,7 @@ export function comments(state = initialCommentState, action: CommentActions.Act
 
     case CommentActions.Types.DELETE_COMMENT_SUCCESS:
       return Object.assign({}, state, {
-        commentList: state.commentList.filter(c => c.id !== action.payload),
+        commentList: state.commentList.filter(c => c.id !== action.payload.id),
         loading: false,
       });
 

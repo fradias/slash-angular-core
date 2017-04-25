@@ -59,13 +59,13 @@ export namespace CommentActions {
   export class DeleteComment implements Action {
     type = Types.DELETE_COMMENT;
 
-    constructor(public payload: string) { }
+    constructor(public payload: Comment) { }
   }
 
   export class DeleteCommentSuccess implements Action {
     type = Types.DELETE_COMMENT_SUCCESS;
 
-    constructor(public payload: string) { }
+    constructor(public payload: Comment) { }
   }
 
   export class DeleteCommentFail implements Action {

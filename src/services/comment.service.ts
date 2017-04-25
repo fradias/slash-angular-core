@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
 import { Comment } from '../comment/comment.model';
+import { API } from '../environments/environment';
 
 
 @Injectable()
@@ -36,32 +37,27 @@ export class CommentService {
   }
 
   getComment(id){
-    let url = `${this.APIcomments}/${id}`;
-
-    return this.http.get(url)
+    return this.http.get(API.comments + `${id}`)
       .map(res => res.json());
   }
 
   createComment(comment) {
     return this.http
-      .post(this.APIcomments, comment, this.options)
+      .post(API.comments + 'create/', comment, this.options)
       .map(res => res.json());
   }
 
-  deleteComment(id) {
+  deleteComment(comment: Comment) {
     console.log('ENTRO EN DELETECOMMENTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-    let url = `${this.APIcomments}/${id}`;
-    console.log(url);
     return this.http
-      .delete(url, this.options);
+      .post(API.comments + 'remove/', comment, this.options)
+      .map(res =>  res.json());
 
   }
 
-  editComment(comment) {
-    let url = `${this.APIcomments}/${comment.id}`;
-
+  editComment(comment: Comment) {
     return this.http
-      .put(url, comment, this.options)
+      .post(API.comments + `${comment.id}`, comment, this.options)
       .map(res => res.json());
   }
 
@@ -169,8 +165,8 @@ ngrxFindCommentsById(ids: any[]) {
   ).delay(1000);
 }
 
-ngrxDeleteCommentById(id: string) {
-  return this.deleteComment(id).map(() => id);
+ngrxDeleteCommentById(comment: Comment) {
+  return this.deleteComment(comment);
 }
 
 

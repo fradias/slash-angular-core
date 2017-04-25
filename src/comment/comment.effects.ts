@@ -45,7 +45,7 @@ export class CommentEffects {
     .ofType(CommentActions.Types.DELETE_COMMENT)
     .switchMap(action =>
       this.commentService.ngrxDeleteCommentById(action.payload)
-        .map((id: string) => new CommentActions.DeleteCommentSuccess(id))
+        .map((c: Comment) => new CommentActions.DeleteCommentSuccess(c))
         .catch((e) => of(new CommentActions.DeleteCommentFail(e)))
     )
 
