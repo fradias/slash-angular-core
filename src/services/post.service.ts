@@ -191,6 +191,12 @@ export class PostService {
       .map(res => res.json())
   }
 
+  dislikePost(data: {postId: string, userId: string}) {
+    return this.http
+      .post(API.posts + 'dislike', data, this.options)
+      .map(res => res.json())
+  }
+
   // NGRX -----------------------------------------------------------
 
   ngrxGetPostById(ids) {

@@ -57,4 +57,12 @@ export class PostEffects {
         .map((post: Post) => new PostActions.LikePostSuccess(post)) // podria re-usar PostActions.CreatePostSuccess(posts)
         .catch((e) => of(new PostActions.LikePostFail(e)))
     );
+
+  @Effect() dislikePost$ = this.actions$
+    .ofType(PostActions.Types.DISLIKE_POST)
+    .switchMap(action =>
+      this.postService.dislikePost(action.payload)
+      .map((post: Post) => new PostActions.LikePostSuccess(post)) // podria re-usar PostActions.CreatePostSuccess(posts)
+      .catch((e) => of(new PostActions.LikePostFail(e)))
+    );
 }

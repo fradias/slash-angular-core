@@ -87,6 +87,9 @@ export function posts(state = initialPostState, action: PostActions.Actions): Po
           error: action.payload
         });
 
+      case PostActions.Types.DISLIKE_POST:
+        return Object.assign({}, state, {loading: true, error: null});
+
     default:
       return state;
   }
