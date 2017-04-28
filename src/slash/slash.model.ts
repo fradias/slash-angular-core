@@ -7,6 +7,7 @@ export interface Slash {
   posts: any[];
   suspiciousness: number;
   updatedDate: string;
+  owner: {id: string};
 
   /*constructor(data: any = {}) {
 

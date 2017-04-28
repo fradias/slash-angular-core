@@ -20,6 +20,8 @@ export namespace SlashActions {
     GET_SLASHES_BY_ID: type('[Slash] Get Slashes By Id'),
     GET_SLASHES_BY_ID_SUCCESS: type('[Slash] Get Slashes By Id Success'),
     GET_SLASHES_BY_ID_FAIL: type('[Slash] Get Slashes By Id Fail'),
+    CREATE_PRIVATE_SLASH: type('[Slash] Create Private Slash'),
+    CREATE_PRIVATE_SLASH_RESULT: type('[Slash] Create Private Slash Result'),
 
   }
 
@@ -113,6 +115,18 @@ export namespace SlashActions {
     constructor(public payload: any) { }
   }
 
+  export class CreatePrivateSlash implements Action {
+    type = Types.CREATE_PRIVATE_SLASH;
+
+    constructor(public payload: any) { }
+  }
+
+  export class CreatePrivateSlashResult implements Action {
+    type = Types.CREATE_PRIVATE_SLASH_RESULT;
+
+    constructor(public payload: any) { }
+  }
+
 
 
 
@@ -134,4 +148,6 @@ export namespace SlashActions {
     | GetSlashesById
     | GetSlashesByIdSuccess
     | GetSlashesByIdFail
+    | CreatePrivateSlash
+    | CreatePrivateSlashResult
 }

@@ -92,6 +92,16 @@ export function slashes(state = initialSlashState, action: SlashActions.Actions)
         error: action.payload
       });
 
+    case SlashActions.Types.CREATE_PRIVATE_SLASH:
+      return Object.assign({}, state, {loading: true, error: null});
+
+    case SlashActions.Types.CREATE_PRIVATE_SLASH_RESULT:
+    console.log('Slash Creation');
+    console.log(action.payload);
+    return Object.assign({}, state, {
+      loading: false
+    });
+
 
 
     default:

@@ -62,4 +62,12 @@ export class SlashEffects {
           .map((slashes: Slash[]) => new SlashActions.GetSlashesByIdSuccess(slashes))
           .catch((e) => of(new SlashActions.GetSlashesByIdFail(e)))
       );
+
+    @Effect() createPrivateSlash$ = this.actions$
+      .ofType(SlashActions.Types.CREATE_PRIVATE_SLASH)
+      .switchMap(action =>
+        this.slashService.createPrivateSlash(action.payload)
+          .map((res) => new SlashActions.CreatePrivateSlashResult(res))
+          .catch((e) => of(new SlashActions.CreatePrivateSlashResult(e)))
+      )
 }

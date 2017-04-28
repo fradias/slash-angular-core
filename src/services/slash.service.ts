@@ -57,6 +57,12 @@ export class SlashService {
             .map(res => res.json());
   }
 
+  createPrivateSlash(data: {name: string, password: string, user: string}) {
+    return this.http
+            .post(API.slashes + 'createprivate', data, this.options)
+            .map(res => res.json())
+  }
+
   getSlash(id) {
     return this.http
             .get(API.slashes + `${id}`)
