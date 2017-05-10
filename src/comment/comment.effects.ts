@@ -56,4 +56,19 @@ export class CommentEffects {
         .map((comment: Comment) => new CommentActions.EditCommentSuccess(comment))
         .catch((e) => of(new CommentActions.EditCommentFail(e)))
     )
+
+  @Effect() testHeader$ = this.actions$
+    .ofType(CommentActions.Types.TEST_HEADER)
+    .switchMap(action =>
+      this.commentService.testHeaders()
+        .map(res => {
+          console.log("TEST_HEADER Effect");
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log("TEST_HEADER Effect");
+          console.log(e);
+          return of(e)
+        })
+    )
 }

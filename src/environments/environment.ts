@@ -11,5 +11,6 @@ export const API = {
   users: 'http://localhost:3000/users/',
   slashes: 'http://localhost:3000/slashes/',
   posts: 'http://localhost:3000/posts/',
-  comments: 'http://localhost:3000/comments/'
+  comments: 'http://localhost:3000/comments/',
+  login: 'http://localhost:3000/login/'
 }

@@ -11,6 +11,7 @@ export namespace ManagerActions {
     MANAGER_LOGOUT: type('[Manager] Manager Logout'),
     MANAGER_LOGOUT_SUCCESS: type('[Manager] Manager Logout Success'),
     MANAGER_LOGOUT_FAIL: type('[Manager] Manager Logout Fail'),
+    GET_LOCAL_TOKENS: type('[Manager] Get LocalStorage Tokens'),
   }
 
   export class ManagerLogin implements Action {
@@ -22,7 +23,7 @@ export namespace ManagerActions {
   export class ManagerLoginSuccess implements Action {
     type = Types.MANAGER_LOGIN_SUCCESS;
 
-    constructor(public payload: User) { }
+    constructor(public payload: any) { }
   }
 
   export class ManagerLoginFail implements Action {
@@ -49,6 +50,12 @@ export namespace ManagerActions {
     constructor(public payload: any) { }
   }
 
+  export class GetLocalTokens implements Action {
+    type = Types.GET_LOCAL_TOKENS;
+
+    constructor(public payload: any) { }
+  }
+
   export type Actions
     = ManagerLogin
     | ManagerLoginSuccess
@@ -56,4 +63,5 @@ export namespace ManagerActions {
     | ManagerLogout
     | ManagerLogoutSuccess
     | ManagerLogoutFail
+    | GetLocalTokens
 }

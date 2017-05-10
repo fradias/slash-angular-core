@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestMethod } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/forkJoin';
@@ -10,9 +10,12 @@ import 'rxjs/add/operator/delay';
 import { Comment } from '../comment/comment.model';
 import { API } from '../environments/environment';
 
+import { BaseApi } from '../shared/base-api';
+import { AuthTokenStorageService } from '../auth/auth-token.service';
+
 
 @Injectable()
-export class CommentService {
+export class CommentService extends BaseApi {
   headers = new Headers({ 'Content-Type': 'application/json' });
   options = new RequestOptions({ headers: this.headers });
 
@@ -21,10 +24,11 @@ export class CommentService {
   commentState$: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(
-    private http: Http,
     private store: Store<any>,
+    http: Http,
+    authTokenStorageService: AuthTokenStorageService,
   ){
-
+    super(authTokenStorageService, http);
   }
 
   initializingCommentState() {
@@ -48,11 +52,11 @@ export class CommentService {
   }
 
   deleteComment(comment: Comment) {
-    console.log('ENTRO EN DELETECOMMENTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-    return this.http
-      .post(API.comments + 'remove/', comment, this.options)
-      .map(res =>  res.json());
-
+    return this.request({
+      body: {model: comment},
+      method: RequestMethod.Post,
+      url: API.comments + 'remove/'
+    });
   }
 
   editComment(comment: Comment) {
@@ -154,6 +158,22 @@ editingComment(comment, callback?: any) {
   });
 }
 
+// USING HEADERS -----------------------------------------------------------
+
+  testHeaders() {
+    let body = {
+      id: '1',
+      status: 'test'
+    }
+    return this.request({
+      body,
+      method: RequestMethod.Post,
+      url: 'http://localhost:3000/headers/'
+    })
+  }
+
+
+
 // NGRX -----------------------------------------------------------
 
 ngrxFindCommentsById(ids: any[]) {
@@ -168,12 +188,6 @@ ngrxFindCommentsById(ids: any[]) {
 ngrxDeleteCommentById(comment: Comment) {
   return this.deleteComment(comment);
 }
-
-
-
-
-
-
 
 
 

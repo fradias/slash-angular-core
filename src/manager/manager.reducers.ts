@@ -5,13 +5,17 @@ import { User } from '../user/user.model';
 export interface ManagerState {
   activeUser: User,
   premium: boolean,
-  plan: string
+  plan: string,
+  token: string,
+  slashTokens: any[]
 }
 
 const initialManagerState: ManagerState = {
   activeUser: undefined,
   premium: false,
-  plan: ''
+  plan: '',
+  token: '',
+  slashTokens: []
 }
 
 export function manager(state = initialManagerState, action: ManagerActions.Actions) {
@@ -21,8 +25,9 @@ export function manager(state = initialManagerState, action: ManagerActions.Acti
 
     case ManagerActions.Types.MANAGER_LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        activeUser: action.payload,
-        premium: action.payload.premium,
+        activeUser: action.payload.user,
+        premium: action.payload.user.premium,
+        token: action.payload.token,
         loading: false
       });
 
@@ -36,7 +41,8 @@ export function manager(state = initialManagerState, action: ManagerActions.Acti
       return Object.assign({}, state, {
         activeUser: undefined,
         premium: false,
-        loading: false
+        loading: false,
+        token: ''
       })
 
     default:

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import { Slash } from '../slash/slash.model';
 import { API } from '../environments/environment';
+import { of } from 'rxjs/observable/of';
 
 
 
@@ -231,6 +232,12 @@ export class SlashService {
     ).subscribe(newSlashesFromApi => {
       return callback(newSlashesFromApi);
     })
+  }
+
+  getPrivateSlash(data: {name: string, pw: string}) {
+    return this.http
+      .post('http://localhost:3000/private/', data, this.options)
+      .map(res => of(res.json()))
   }
 
 

@@ -17,6 +17,7 @@ export namespace CommentActions {
     EDIT_COMMENT: type('[Comment] Edit Comment'),
     EDIT_COMMENT_SUCCESS: type('[Comment] Edit Comment Success'),
     EDIT_COMMENT_FAIL: type('[Comment] Edit Comment Fail'),
+    TEST_HEADER: type('[HEADER] Test Header')
 
   }
 
@@ -92,6 +93,12 @@ export namespace CommentActions {
     constructor(public payload: any) { }
   }
 
+  export class TestHeader implements Action {
+    type = Types.TEST_HEADER;
+
+    constructor(public payload: any) {}
+  }
+
 
 
 
@@ -109,4 +116,5 @@ export namespace CommentActions {
     | EditComment
     | EditCommentSuccess
     | EditCommentFail
+    | TestHeader
 }

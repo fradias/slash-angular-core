@@ -17,6 +17,7 @@ import { UserEffects } from './user/user.effects';
 import { SlashEffects } from './slash/slash.effects';
 import { ManagerEffects } from './manager/manager.effects';
 import { PullEffects } from './pull/pull.effects';
+import { AuthTokenStorageService } from './auth/auth-token.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { PullEffects } from './pull/pull.effects';
     SlashService,
     CommentService,
     PostService,
-    UserService
+    UserService,
+    AuthTokenStorageService
   ]
 })
 

@@ -18,10 +18,10 @@ export class ManagerEffects {
 
   }
 
-  @Effect() managerLogin$ = this.actions$
+  /*@Effect() managerLogin$ = this.actions$
     .ofType(ManagerActions.Types.MANAGER_LOGIN)
     .switchMap(action =>
-      this.userService.ngrxLogin(action.payload.data)
+      this.userService.ngrxLogin(action.payload.data.user)
         .map((user: User) => {
           if (action.payload.callback) {
             action.payload.callback(null,user);
@@ -34,10 +34,30 @@ export class ManagerEffects {
           }
           return of(new ManagerActions.ManagerLoginFail(e))
         })
+    );*/
+
+  @Effect() managerLogin$ = this.actions$
+    .ofType(ManagerActions.Types.MANAGER_LOGIN)
+    .switchMap(action =>
+      this.userService.login(action.payload.data)
+        .map((res) => {
+          console.log('RESPONSE');
+          console.log(res);
+          if (action.payload.callback) {
+            action.payload.callback(null,res.user);
+          }
+          return new ManagerActions.ManagerLoginSuccess(res)
+        })
+        .catch((e) => {
+          if (action.payload.callback) {
+            action.payload.callback(e);
+          }
+          return of(new ManagerActions.ManagerLoginFail(e))
+        })
     );
 
   @Effect() addLoggedUserToList$ = this.actions$
     .ofType(ManagerActions.Types.MANAGER_LOGIN_SUCCESS)
-    .map(action => new UserActions.GetUsersByIdSuccess([action.payload]));
+    .map(action => new UserActions.GetUsersByIdSuccess([action.payload.user]));
 
 }

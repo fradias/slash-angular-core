@@ -5,4 +5,5 @@ export * from './pull';
 export * from './post';
 export * from './manager';
 export * from './comment';
+export * from './auth';
 export { CoreModule } from './core.module';

@@ -200,22 +200,10 @@ export class UserService implements OnInit {
     })
   }
 
-  login(name: string, callback) {
-    this.getUsers().subscribe(users => {
-      let user = users.find(user => user.name === name);
-      if (user) {
-        this.findUsersById([user.id], (err, user) => {
-          if (err) {
-            console.log(err);
-            return callback(err);
-          }
-          this.setCurrentUser(user.name, currentUser => console.log('setcurrentuser callback'))
-          return callback(null, user);
-        });
-      } else {
-        return callback('USER_NOT_FOUND');
-      }
-    })
+  login(data: {user: string, pw: string}) {
+    return this.http
+      .post(API.login, data, this.options)
+      .map(res => res.json())
   }
 
   // NGRX -----------------------------------------------------------

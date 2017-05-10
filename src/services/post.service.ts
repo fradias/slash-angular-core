@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Http } from '@angular/http';
+import { Http, RequestMethod } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
@@ -13,9 +13,12 @@ import { API } from '../environments/environment';
 
 import { updateAndfilterUniqueItems } from '../shared/helpers';
 
+import { BaseApi } from '../shared/base-api';
+import { AuthTokenStorageService } from '../auth/auth-token.service';
+
 
 @Injectable()
-export class PostService {
+export class PostService extends BaseApi {
   headers = new Headers({ 'Content-Type': 'application/json' });
   options = new RequestOptions({ headers: this.headers });
 
@@ -25,11 +28,12 @@ export class PostService {
   APIusers = 'http://localhost:8080/user';
 
   constructor(
-    private http: Http,
+    http: Http,
+    authTokenStorageService: AuthTokenStorageService,
     private slashService: SlashService,
     private store: Store<any>,
   ){
-
+    super(authTokenStorageService,http);
   }
 
   initializingPostState() {
@@ -48,9 +52,15 @@ export class PostService {
   }
 
   createPost(post) {
-    return this.http
+    return this.request({
+      body: post,
+      method: RequestMethod.Post,
+      url: API.posts + 'create/'
+    })
+
+    /*return this.http
       .post(API.posts + 'create/', post, this.options)
-      .map(res => res.json())
+      .map(res => res.json())*/
   }
 
   deletePost(post) {

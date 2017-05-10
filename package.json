@@ -25,25 +25,25 @@
   },
   "homepage": "https://github.com/fradias/slash-angular-core#readme",
   "dependencies": {
-    "@angular/common": "4.0.2",
-    "@angular/core": "4.0.2",
-    "@angular/http": "4.0.2",
-    "@angular/router": "4.0.2",
+    "@angular/common": "4.1.1",
+    "@angular/core": "4.1.1",
+    "@angular/http": "4.1.1",
+    "@angular/router": "4.1.1",
     "@ngrx/core": "1.2.0",
-    "@ngrx/effects": "2.0.2",
-    "@ngrx/store": "2.2.1",
+    "@ngrx/effects": "2.0.3",
+    "@ngrx/store": "2.2.2",
     "ngrx-store-logger": "0.1.7",
-    "rxjs": "5.3.0"
+    "rxjs": "5.4.0"
   },
   "devDependencies": {
-    "@angular/compiler": "4.0.2",
-    "@angular/compiler-cli": "4.0.2",
-    "@types/node": "7.0.13",
+    "@angular/compiler": "4.1.1",
+    "@angular/compiler-cli": "4.1.1",
+    "@types/node": "7.0.18",
     "@types/systemjs": "0.20.2",
     "git-validate": "2.2.2",
     "ngrx-store-freeze": "0.1.9",
-    "tslint": "5.1.0",
-    "typescript": "2.2.2"
+    "tslint": "5.2.0",
+    "typescript": "2.3.2"
   },
   "files": [
     "dist/"
