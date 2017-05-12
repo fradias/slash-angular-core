@@ -12,5 +12,8 @@ export const API = {
   slashes: 'http://localhost:3000/slashes/',
   posts: 'http://localhost:3000/posts/',
   comments: 'http://localhost:3000/comments/',
-  login: 'http://localhost:3000/login/'
+  login: {
+    user: 'http://localhost:3000/login/user',
+    slash: 'http://localhost:3000/login/slash'
+  }
 }

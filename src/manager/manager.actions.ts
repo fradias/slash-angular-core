@@ -12,6 +12,7 @@ export namespace ManagerActions {
     MANAGER_LOGOUT_SUCCESS: type('[Manager] Manager Logout Success'),
     MANAGER_LOGOUT_FAIL: type('[Manager] Manager Logout Fail'),
     GET_LOCAL_TOKENS: type('[Manager] Get LocalStorage Tokens'),
+    ADD_SLASH_TOKEN: type('[Manager] Add Slash Token'),
   }
 
   export class ManagerLogin implements Action {
@@ -56,6 +57,13 @@ export namespace ManagerActions {
     constructor(public payload: any) { }
   }
 
+  export class AddSlashToken implements Action {
+    type = Types.ADD_SLASH_TOKEN;
+
+    constructor(public payload: any) { }
+  }
+
+
   export type Actions
     = ManagerLogin
     | ManagerLoginSuccess
@@ -64,4 +72,5 @@ export namespace ManagerActions {
     | ManagerLogoutSuccess
     | ManagerLogoutFail
     | GetLocalTokens
+    | AddSlashToken
 }

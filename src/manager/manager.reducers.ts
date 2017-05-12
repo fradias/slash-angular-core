@@ -43,7 +43,12 @@ export function manager(state = initialManagerState, action: ManagerActions.Acti
         premium: false,
         loading: false,
         token: ''
-      })
+      });
+
+    case ManagerActions.Types.ADD_SLASH_TOKEN:
+      return Object.assign({}, state, {
+        slashTokens: state.slashTokens.concat(action.payload)
+      });
 
     default:
       return state;

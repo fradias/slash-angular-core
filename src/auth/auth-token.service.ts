@@ -18,6 +18,28 @@ export class AuthTokenStorageService {
         return token;
     }
 
+    getSlashToken(name: string) {
+      console.log('find slash token');
+      name = '/' + name;
+      console.log(name);
+      let token;
+      this.store.take(1).subscribe(store => {
+        store.managerState.slashTokens.forEach(s => {
+          console.log('entro al forEach');
+          if (name in s) {
+            console.log('encontro name');
+            token = s[name];
+          } else {
+            console.log('no encontro name');
+          }
+        })
+      });
+      if (token) {
+        return token;
+      }
+      return;
+    }
+
     removeToken() {
         // localStorage.removeItem(AuthTokenStorageService.STORAGE_KEY);
     }

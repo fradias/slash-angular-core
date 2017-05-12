@@ -46,9 +46,14 @@ export class CommentService extends BaseApi {
   }
 
   createComment(comment) {
-    return this.http
+    return this.request({
+      body: comment,
+      method: RequestMethod.Post,
+      url: API.comments + 'create/'
+    })
+    /*return this.http
       .post(API.comments + 'create/', comment, this.options)
-      .map(res => res.json());
+      .map(res => res.json());*/
   }
 
   deleteComment(comment: Comment) {
@@ -60,9 +65,14 @@ export class CommentService extends BaseApi {
   }
 
   editComment(comment: Comment) {
-    return this.http
+    return this.request({
+      body: comment,
+      method: RequestMethod.Post,
+      url: API.comments + `${comment.id}`
+    })
+    /*return this.http
       .post(API.comments + `${comment.id}`, comment, this.options)
-      .map(res => res.json());
+      .map(res => res.json());*/
   }
 
   findCommentsById(ids: any[], callback?: any) {

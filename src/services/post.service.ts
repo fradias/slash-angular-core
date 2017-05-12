@@ -79,17 +79,12 @@ export class PostService extends BaseApi {
       .map(res => res.json());
   }
 
-  editPost(text, postId){
-    let updatedPost = {
-      text: text
-    }
-    let url = `${this.APIurl}/${postId}`;
-
-    return this.http
-      .put(url, updatedPost, this.options)
-      .map(res => {
-        return res.json();
-      })
+  editPost(post: Post){
+    return this.request({
+      body: post,
+      method: RequestMethod.Post,
+      url: API.posts + `${post.id}`
+    })
   }
 
   findPostById(ids) {
@@ -180,18 +175,6 @@ export class PostService extends BaseApi {
           editing: true
         })
       }))
-    })
-  }
-
-  editingPost(postText, postId) {
-    this.editPost(postText, postId).subscribe(updatedPostFromApi => {
-      this.postState$.take(1).subscribe(postState => {
-        let postList = updateAndfilterUniqueItems(postState.list.concat(updatedPostFromApi));
-        this.postState$.next(Object.assign({}, postState, {
-          currentPost: updatedPostFromApi,
-          list: postList,
-        }))
-      })
     })
   }
 

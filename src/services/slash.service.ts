@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Http } from '@angular/http';
+import { Http, RequestMethod } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -10,12 +10,13 @@ import { Slash } from '../slash/slash.model';
 import { API } from '../environments/environment';
 import { of } from 'rxjs/observable/of';
 
-
+import { BaseApi } from '../shared/base-api';
+import { AuthTokenStorageService } from '../auth/auth-token.service';
 
 import { updateAndfilterUniqueItems } from '../shared/helpers';
 
 @Injectable()
-export class SlashService {
+export class SlashService extends BaseApi {
   headers = new Headers({ 'Content-Type': 'application/json' });
   options = new RequestOptions({ headers: this.headers });
 
@@ -24,11 +25,12 @@ export class SlashService {
   slashState$: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(
-    private http: Http,
+    http: Http,
+    authTokenStorageService: AuthTokenStorageService,
     private store: Store<any>,
     private route: ActivatedRoute,
   ){
-
+    super(authTokenStorageService, http);
   }
 
   initializingSlashState() {
@@ -71,8 +73,13 @@ export class SlashService {
   }
 
   getSlashByName(name: string) {
-    return this.http.get(API.slashes + `?name=/${name}`)
-            .map(res => res.json());
+    return this.request({
+      body: {name: name},
+      method: RequestMethod.Get,
+      url: API.slashes + `?name=/${name}`
+    })
+    /*return this.http.get(API.slashes + `?name=/${name}`, this.options)
+            .map(res => res.json());*/
   }
 
   setCurrentSlash(currentSlash) {
@@ -240,6 +247,14 @@ export class SlashService {
       .map(res => of(res.json()))
   }
 
+  slashLogin(data) {
+    return this.request({
+      body: data,
+      method: RequestMethod.Post,
+      url: API.login.slash
+    });
+  }
+
 
   // NGRX -----------------------------------------------------------
 
@@ -286,7 +301,7 @@ export class SlashService {
 
   ngrxGetCurrentSlashes() {
     return this.store.map(store => {
-      return store.slashState.currentSlashesId.map(name => {
+      return store.slashState.currentSlashesNames.map(name => {
         return store.slashState.slashList.find(s => s.name === `/${name}`)
       }).filter(s => !!s);
     })
@@ -297,6 +312,16 @@ export class SlashService {
       return names.map(name => {
         return store.slashState.slashList.find(s => s.name === `/${name}`)
       }).filter(s => !!s);
+    })
+  }
+
+  getCurrentPrivateSlash() {
+    return this.store.map(store => {
+      return store.slashState.slashList.find(s =>{
+        if (store.slashState.currentSlashesNames) {
+          return s.name === store.slashState.currentSlashesNames[0]
+        }
+      })
     })
   }
 

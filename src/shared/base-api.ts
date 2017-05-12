@@ -28,6 +28,9 @@ export abstract class BaseApi {
     protected request(options: any = {}): Observable<any> {
         options.headers = new Headers();
         options.headers.append('Token', this.authTokenStorageService.getToken());
+        console.log('REQUEST Base Api');
+        console.log(options.body);
+        options.headers.append('SlashToken', this.authTokenStorageService.getSlashToken(options.body.name))
         // options.headers.append('Authorization', 'Bearer ' + this.authTokenStorageService.getToken());
 
         if (options.queryParameter) {

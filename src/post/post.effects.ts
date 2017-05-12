@@ -65,4 +65,12 @@ export class PostEffects {
       .map((post: Post) => new PostActions.LikePostSuccess(post)) // podria re-usar PostActions.CreatePostSuccess(posts)
       .catch((e) => of(new PostActions.LikePostFail(e)))
     );
+
+  @Effect() editPost$ = this.actions$
+    .ofType(PostActions.Types.EDIT_POST)
+    .switchMap(action =>
+      this.postService.editPost(action.payload)
+        .map((post: Post) => new PostActions.EditPostSuccess(post))
+        .catch((e) => of(new PostActions.EditPostFail(e)))
+    );
 }

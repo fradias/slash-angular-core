@@ -5,6 +5,7 @@ import { SlashService } from '../';
 import { Slash } from './slash.model';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
+import { ManagerActions } from '../manager/manager.actions';
 
 
 @Injectable()
@@ -69,5 +70,33 @@ export class SlashEffects {
         this.slashService.createPrivateSlash(action.payload)
           .map((res) => new SlashActions.CreatePrivateSlashResult(res))
           .catch((e) => of(new SlashActions.CreatePrivateSlashResult(e)))
-      )
+      );
+
+    @Effect() getPrivateSlashByName$ = this.actions$
+      .ofType(SlashActions.Types.GET_PRIVATE_SLASH_BY_NAME)
+      .switchMap(action =>
+        this.slashService.getSlashByName(action.payload)
+          .map((res) => new SlashActions.GetPrivateSlashByNameSuccess(res))
+          .catch((e) => of(new SlashActions.GetPrivateSlashByNameFail(e)))
+      );
+
+    @Effect() slashLogin$ = this.actions$
+      .ofType(SlashActions.Types.SLASH_LOGIN)
+      .mergeMap(action =>
+        this.slashService.slashLogin(action.payload)
+          .mergeMap((data) => {
+            if (data.error) {
+              return of(new SlashActions.SlashLoginFail(data.error))
+            }
+            let obj = {};
+            obj[data.slash.name] = data.token;
+            return Observable.from([
+              new SlashActions.SlashLoginSuccess(data.slash),
+              new ManagerActions.AddSlashToken(obj)
+            ]);
+          })
+          .catch((e) => of(new SlashActions.SlashLoginFail(e)))
+      );
+
+
 }

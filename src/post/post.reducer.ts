@@ -90,6 +90,20 @@ export function posts(state = initialPostState, action: PostActions.Actions): Po
       case PostActions.Types.DISLIKE_POST:
         return Object.assign({}, state, {loading: true, error: null});
 
+      case PostActions.Types.EDIT_POST:
+        return Object.assign({}, state, {loading: true, error: null});
+
+      case PostActions.Types.EDIT_POST_SUCCESS:
+        return Object.assign({}, state, {
+          postList: updateAndfilterUniqueItems(state.postList.concat(action.payload)),
+          loading: false
+        });
+
+      case PostActions.Types.EDIT_POST_FAIL:
+        return Object.assign({}, state, {
+          error: action.payload,
+          loading: false
+        });
     default:
       return state;
   }

@@ -4,13 +4,13 @@ import { updateAndfilterUniqueItems } from '../shared/helpers';
 
 
 export interface SlashState {
-  currentSlashesId: string[],
+  currentSlashesNames: string[],
   slashList: Slash[],
   loading: boolean
 }
 
 const initialSlashState: SlashState = {
-  currentSlashesId: undefined,
+  currentSlashesNames: undefined,
   slashList: [],
   loading: false
 }
@@ -58,7 +58,7 @@ export function slashes(state = initialSlashState, action: SlashActions.Actions)
 
     case SlashActions.Types.SET_CURRENT_SLASHES_ID:
       return Object.assign({}, state, {
-        currentSlashesId: action.payload,
+        currentSlashesNames: action.payload,
         loading: false
       });
 
@@ -96,13 +96,44 @@ export function slashes(state = initialSlashState, action: SlashActions.Actions)
       return Object.assign({}, state, {loading: true, error: null});
 
     case SlashActions.Types.CREATE_PRIVATE_SLASH_RESULT:
-    console.log('Slash Creation');
-    console.log(action.payload);
+      console.log('Slash Creation');
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        loading: false
+      });
+
+    case  SlashActions.Types.GET_PRIVATE_SLASH_BY_NAME:
+      return Object.assign({}, state, {loading: true, error: null})
+
+    case  SlashActions.Types.GET_PRIVATE_SLASH_BY_NAME_SUCCESS:
+      console.log('GET_SLASHES_BY_ID_SUCCESS');
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        slashList: updateAndfilterUniqueItems(state.slashList.concat(action.payload)),
+        currentSlashesNames: [action.payload.name],
+        loading: false
+      });
+
+    case SlashActions.Types.GET_PRIVATE_SLASH_BY_NAME_FAIL:
     return Object.assign({}, state, {
+      error: action.payload,
       loading: false
     });
 
+    case SlashActions.Types.SLASH_LOGIN:
+    return Object.assign({}, state, {loading: true, error: null});
 
+    case SlashActions.Types.SLASH_LOGIN_SUCCESS:
+    return Object.assign({}, state, {
+      slashList: updateAndfilterUniqueItems(state.slashList.concat(action.payload)),
+      loading: false
+    });
+
+    case SlashActions.Types.SLASH_LOGIN_SUCCESS:
+    return Object.assign({}, state, {
+      error: action.payload,
+      loading: false
+    });
 
     default:
         return state;

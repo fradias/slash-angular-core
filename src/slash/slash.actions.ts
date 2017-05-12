@@ -22,6 +22,13 @@ export namespace SlashActions {
     GET_SLASHES_BY_ID_FAIL: type('[Slash] Get Slashes By Id Fail'),
     CREATE_PRIVATE_SLASH: type('[Slash] Create Private Slash'),
     CREATE_PRIVATE_SLASH_RESULT: type('[Slash] Create Private Slash Result'),
+    GET_PRIVATE_SLASH_BY_NAME: type('[Slash] Get Private Slash By Name'),
+    GET_PRIVATE_SLASH_BY_NAME_SUCCESS: type('[Slash] Get Private Slash By Name Success'),
+    GET_PRIVATE_SLASH_BY_NAME_FAIL: type('[Slash] Get Private Slash By Name Fail'),
+    SLASH_LOGIN: type('[Slash] Slash Login'),
+    SLASH_LOGIN_SUCCESS: type('[Slash] Slash Login Success'),
+    SLASH_LOGIN_FAIL: type('[Slash] Slash Login Fail'),
+
 
   }
 
@@ -43,19 +50,19 @@ export namespace SlashActions {
     constructor(public payload: any) { }
   }
 
-  export class SetCurrentSlashesId implements Action {
+  export class SetCurrentSlashesNames implements Action {
     type = Types.SET_CURRENT_SLASHES_ID;
 
     constructor(public payload: string[]) { }
   }
 
-  export class SetCurrentSlashesIdSuccess implements Action {
+  export class SetCurrentSlashesNamesSuccess implements Action {
     type = Types.SET_CURRENT_SLASHES_ID_SUCCESS;
 
     constructor(public payload: string[]) { }
   }
 
-  export class SetCurrentSlashesIdFail implements Action {
+  export class SetCurrentSlashesNamesFail implements Action {
     type = Types.SET_CURRENT_SLASHES_ID_FAIL;
 
     constructor(public payload: any) { }
@@ -127,18 +134,49 @@ export namespace SlashActions {
     constructor(public payload: any) { }
   }
 
+  export class GetPrivateSlashByName implements Action {
+    type = Types.GET_PRIVATE_SLASH_BY_NAME;
 
+    constructor(public payload: string) { }
+  }
 
+  export class GetPrivateSlashByNameSuccess implements Action {
+    type = Types.GET_PRIVATE_SLASH_BY_NAME_SUCCESS;
 
+    constructor(public payload: Slash) { }
+  }
 
+  export class GetPrivateSlashByNameFail implements Action {
+    type = Types.GET_PRIVATE_SLASH_BY_NAME_FAIL;
+
+    constructor(public payload: any) { }
+  }
+
+  export class SlashLogin implements Action {
+    type = Types.SLASH_LOGIN;
+
+    constructor(public payload: any) { }
+  }
+
+  export class SlashLoginSuccess implements Action {
+    type = Types.SLASH_LOGIN_SUCCESS;
+
+    constructor(public payload: any) { }
+  }
+
+  export class SlashLoginFail implements Action {
+    type = Types.SLASH_LOGIN_FAIL;
+
+    constructor(public payload: any) { }
+  }
 
   export type Actions
     = GetSlashes
     | GetSlashesSuccess
     | GetSlashesFail
-    | SetCurrentSlashesId
-    | SetCurrentSlashesIdSuccess
-    | SetCurrentSlashesIdFail
+    | SetCurrentSlashesNames
+    | SetCurrentSlashesNamesSuccess
+    | SetCurrentSlashesNamesFail
     | GetSlashesByName
     | GetSlashesByNameSuccess
     | GetSlashesByNameFail
@@ -150,4 +188,10 @@ export namespace SlashActions {
     | GetSlashesByIdFail
     | CreatePrivateSlash
     | CreatePrivateSlashResult
+    | GetPrivateSlashByName
+    | GetPrivateSlashByNameSuccess
+    | GetPrivateSlashByNameFail
+    | SlashLogin
+    | SlashLoginSuccess
+    | SlashLoginFail
 }

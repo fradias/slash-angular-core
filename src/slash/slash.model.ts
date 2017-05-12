@@ -4,6 +4,7 @@ export interface Slash {
   isPrivate: boolean;
   members: any[];
   name: string;
+  password: string;
   posts: any[];
   suspiciousness: number;
   updatedDate: string;

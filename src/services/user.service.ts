@@ -202,7 +202,7 @@ export class UserService implements OnInit {
 
   login(data: {user: string, pw: string}) {
     return this.http
-      .post(API.login, data, this.options)
+      .post(API.login.user, data, this.options)
       .map(res => res.json())
   }
 
