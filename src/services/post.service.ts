@@ -190,6 +190,15 @@ export class PostService extends BaseApi {
       .map(res => res.json())
   }
 
+  getPostsByUserId(id: string) {
+    return this.http.get(API.posts + `?user=${id}`, this.options)
+      .map(res => res.json());
+    /*return this.request({
+      method: RequestMethod.Get,
+      url: API.posts + `?user=${id}`
+    })*/
+  }
+
   // NGRX -----------------------------------------------------------
 
   ngrxGetPostById(ids) {
@@ -205,9 +214,7 @@ export class PostService extends BaseApi {
   }
 
   ngrxFindPostByUserId(userId: string) {
-    return this.getPosts().map((posts: Post[]) => {
-      return posts.filter((post: Post) => post.user.id === userId);
-    })
+    return this.getPostsByUserId(userId);
   }
 
   // NGRX Selectors --------------------------------------------------

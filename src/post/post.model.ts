@@ -6,6 +6,7 @@ export interface Post {
   image: string;
   likes: any[];
   slashes: any[];
+  privateSlash: boolean;
   suspiciousness: number;
   text: string;
   updatedDate: string;
